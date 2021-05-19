@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), Listener {
     }
 
     private fun observeData(){
-        viewModel.lst.observe(this, Observer{
+        viewModel.lst.observe(this, {
 
             recyclerView.adapter= NoteRecyclerAdapter(viewModel, it, this)
         })
@@ -47,13 +47,6 @@ class MainActivity : AppCompatActivity(), Listener {
     private fun addData(url:String){
         viewModel.add(url)
         recyclerView.adapter?.notifyDataSetChanged()
-        if(title.isBlank()){
-            Toast.makeText(this,"Enter value!",Toast.LENGTH_LONG).show()
-        }else{
-         //   val blog= Model(title)
-
-        }
-
     }
 
     private fun loadContent() {
@@ -70,7 +63,6 @@ class MainActivity : AppCompatActivity(), Listener {
         db.close()
         GlobalScope.launch(Dispatchers.Main) {
             for (item in list) {
-                Log.e("aaaaaaaaa", item.enclosure)
                 addData(item.enclosure)
             }
         }
